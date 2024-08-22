@@ -13,11 +13,11 @@ function Appbar(){
                 "Authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then(res => res.json())
-        .then(data => {
+        .then((data) => {
             if(data.username){
                 setUserEmail(data.username)
             }
-        })   
+        })  
     }, []);
 
     if(userEmail){
@@ -32,6 +32,16 @@ function Appbar(){
             </Typography></div>
             <div style={{display:"flex"}}>
             <div style={{marginRight:8}}>
+                <Button 
+                variant={"h6"}
+                onClick={async() => {
+                    navigate("./addcourse")
+                }}>Add courses</Button>
+            <Button 
+                variant={"h6"}
+                onClick={async() => {
+                    navigate("./courses")
+                }}>Courses</Button>
                 {userEmail}
                 <Button 
                 variant={"contained"}
@@ -67,7 +77,7 @@ function Appbar(){
                 variant={"contained"}
                 onClick={() => {
                     // window.location = "/signin"
-                    navigate("./signin")
+                    navigate("./login")
     
                 }}>Sign in</Button>
             </div>

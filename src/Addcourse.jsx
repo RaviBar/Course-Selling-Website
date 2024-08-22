@@ -3,11 +3,12 @@ import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import { useState } from 'react';
 import { Typography } from '@mui/material';
-
+import axios from 'axios';
 function Addcourse(){
         const [title, setTitle] = useState("")
         const [description, setDescription] = useState("") 
         const [image, setImage] = useState("") 
+        const [price, setPrice] = useState(0) 
     return <div>
         <div style={{
         paddingTop: 100,
@@ -22,6 +23,7 @@ function Addcourse(){
     <div style={{display: "flex", justifyContent: "center"}}>
         <Card variant="outlined" style={{width: 350, padding: 25, }}>
         <TextField 
+        style={{marginBottom: 10}}
             onChange={(e) => {
                 setTitle(e.target.value);
             }}
@@ -48,32 +50,32 @@ function Addcourse(){
             variant="outlined" 
             />
             <br /> <br />
+            <TextField
+            onChange={(e) => {
+                setImage(e.target.value);
+            }}
+            fullWidth={true} 
+            label="Price" 
+            variant="outlined" 
+            />
+            <br/> <br/>
             <Button 
             size={'large'} 
             variant="contained"
-            onClick={() =>{
-                function callback2(data){
-                    alert("course added");
-                    console.log(data);
-                }
-                function callback1(res){
-                    res.json().then(callback2);
-                }
-                fetch("http://localhost:4000/admin/courses", {
-                    method: "POST",
-                    body: JSON.stringify({
-                        title: title,
-                        description: description,
-                        imageLink: image,
-                        published: true
-                    }),
+            onClick={async() =>{
+                await axios.post("http://localhost:4000/admin/courses", {
+                    title: title,
+                    description: description,
+                    imageLink: image,
+                    published: true,
+                    price
+                }, {
                     headers: {
-                        "Content-type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("token")
                     }
-                }).then(callback1)
+                })
+                alert("course added");
             }}
-
             >Add course</Button></Card>
     </div></div>
 }

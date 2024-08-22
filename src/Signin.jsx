@@ -2,8 +2,15 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Signin(){
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
     return <div>
         <div style={{
             paddingTop: 100,
@@ -32,7 +39,18 @@ function Signin(){
             variant="outlined" 
             />
             <br /> <br />
-            <Button size={'large'} variant="contained">Sign in</Button>
+            <Button size={'large'} variant="contained"
+            onClick={async() => {
+                const response = await axios.post("http://localhost:4000/admin/login", {
+                    username: email,
+                    password: password
+                })
+                let data = response.data;
+                localStorage.setItem("token", data.token);
+                alert("logged in")
+                navigate("/"); 
+            }}
+            >Login</Button>
             </Card>
             </div>
     </div>
