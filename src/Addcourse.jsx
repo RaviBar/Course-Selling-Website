@@ -52,7 +52,7 @@ function Addcourse(){
             <br /> <br />
             <TextField
             onChange={(e) => {
-                setImage(e.target.value);
+                setPrice(e.target.value);
             }}
             fullWidth={true} 
             label="Price" 
